@@ -1,0 +1,29 @@
+<%- include('../partials/head', {title: PageTitle}) %>
+<%- include('../partials/nav') %>
+
+<div class="container-fluid">
+    <div class="row">
+        <% for (p of products) { %>
+        <div class="col-md-4 mb-4"> 
+            <div class="card" style="width:100%">
+                <img class="card-img-top" src="<%= p.imageUrl %>" alt="Card image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h4 class="card-title"><%= p.name %></h4>
+                    <p class="card-text"><%= p.description %></p>
+                    <p class="card-text">Price = $<%= p.price %></p>
+                    <form method="post" action="/cart">
+                        <input type="hidden" name="productId" value="<%= p._id %>">
+                        <% if (!isAuthenticated) { %>
+                            <button type="submit" class="btn-primary" disabled>Add to cart</button>
+                        <% } else { %>
+                            <button type="submit" class="btn-primary">Add to cart</button>
+                        <% } %>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

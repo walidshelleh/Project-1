@@ -1,0 +1,20 @@
+<%- include("../partials/head.ejs", { title: title }) %>
+<%- include("../partials/nav.ejs") %>
+
+<h1>Your Orders</h1>
+<% for (let order of orders) { %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">Order ID: <%= order._id %></h5>
+      <ul>
+        <% for (let item of order.items) { %>
+          <li>
+            <%= item.product.name %> - $<%= item.product.price.toFixed(2) %> x <%= item.quantity %>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+<% } %>
+
+<%- include("../partials/footer.ejs") %>

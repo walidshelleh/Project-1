@@ -1,0 +1,38 @@
+<%- include('../partials/head', {title: PageTitle}) %>
+<%- include('../partials/nav') %>
+
+<div class="container-fluid">
+    <div class="row">
+        <% let totalPrice = 0; %>
+        <% for (p of products) { %>
+        <% totalPrice += p.productId.price * p.quantity; %>
+        <div class="col-md-4 mb-4"> 
+            <div class="card" style="width:100%">
+                <img class="card-img-top" src="<%= p.productId.imageURL %>" alt="Card image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h4 class="card-title"><%= p.productId.name %></h4>
+                    <p class="card-text"><%= p.productId.description %></p>
+                    <p class="card-text">Price: $<%= p.productId.price %></p>
+                    <p class="card-text">Quantity: <%= p.quantity %></p>
+                    <form action="/cart-delete-item" method="POST">
+                        <input type="hidden" name="id" value="<%= p.productId._id %>">
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+
+<div class="row mt-4">
+    <div class="col-md-7 text-right">
+        <h4>Total Price: $<%= totalPrice %></h4>
+        <form action="/create-order" method="POST">
+            <button type="submit" class="btn btn-success">Order Now</button>
+        </form>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
